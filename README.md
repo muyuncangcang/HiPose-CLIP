@@ -1,7 +1,3 @@
-这是一个为您基于《HiPose-CLIP：基于 CLIP 的分层多模态对齐开放集视频域自适应》论文内容定制的 GitHub README 模板。它涵盖了项目背景、核心贡献、方法架构及实验结果。
-
----
-
 # HiPose-CLIP: CLIP-Based Hierarchical Multimodal Alignment for Open-Set Video Domain Adaptation
 
 本仓库是论文 **"HiPose-CLIP: 基于 CLIP 的分层多模态对齐开放集视频域自适应"** 的官方代码实现（北京理工大学毕业设计项目） 。
