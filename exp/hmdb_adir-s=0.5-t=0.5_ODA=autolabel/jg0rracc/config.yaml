@@ -1,0 +1,121 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - setting: hmdb_adir    # hmdb_ucf
+network:
+  arch: ViT-B/32  # ViT-B/32 ViT-B/16
+  tsm: False
+  dropout: 0.0
+  emb_dropout: 0.0
+  init: True
+  joint: False
+  sim_header: "Conv_1D"  #Transf   meanP  LSTM Conv_1D Transf_cls
+  dim: 512
+  freeze: none
+  pretrained_model: ""
+data:
+  Daily_DA: True
+  skeleton_train_path: "/opt/data/private/SkeletonDataset/hmdb51_hrnet.pkl"
+  skeleton_val_path: "/opt/data/private/SkeletonDataset/arid_all.pkl"
+  num_segments: 8
+  input_size: 224
+  batch_size: 6
+  workers: 4
+  randaug:
+    N: 2
+    M: 9
+  frame_tmpl: "{:05d}.jpg"
+  random_shift: True
+  class_augmenter:
+    enabled: False
+    version: verb_classes
+  feat_dim: 512
+  clean_ek: False
+logging:
+  wandb: False
+  neptune: False
+  comet: False
+  workspace_name: gzaraunitn
+  project_name: clip-oda
+  run_name: ${data.dataset}-s=${loss.source.weight}-t=${loss.target.weight}
+  tag: ""
+  save: False
+  verbose: False
+loss:
+  source:
+    weight: 0.5 #1.0
+  target:
+    weight: 0.5 #0.0
+    confidence_threshold: 0.0
+    use_gt: False
+    filtering: single_threshold
+    k: 10
+    k_type: percentage
+    class_wise_thresholds_computation: offline
+    class_wise_thresholds_computation_frequency: 5
+  target_consistency:
+    weight: 0.0
+solver:
+  type: cosine
+  lr: 5.e-6
+  optim: adamw
+  lr_warmup_steps: 3
+  lr_decay_steps: [4, 8, 12, 16]
+  start_epoch: 0
+  epochs: 30
+  ratio: 1
+  f_ratio: 10
+  weight_decay: 0.2
+  momentum: 0.9
+  prompt_optimizer: sgd
+  single_optimizer: False
+general:
+  sanity_check: True
+  sanity_check_steps: 2
+  slurm: False
+  alderaan: False
+  hpc: False
+open_set:
+  method: autolabel
+  threshold: 0.5
+attributes:
+  clustering_method: hodge # kmeans/hodge
+
+  silhouette_score: True        # 是否计算轮廓系数
+  auto_k: True
+  hog_orientations: 8
+  hog_pixels_per_cell: [16, 16]
+  spectral_affinity: 'nearest_neighbors'
+
+  k_clustering: 20 # 20
+  n_attributes: 3
+  selection: topk #topk、threshold
+  tf_idf_threshold: 0.4
+  t_selection: 2
+  n_blanks: 5
+  matching_threshold: 0.5
+  tf_idf_topk_source: 3
+  tf_idf_topk_target: 3
+  use_vilt_order: False
+  final_prompt_length: 3
+  use_elbow: True
+  sinkhorn:
+    iters: 3
+    epsilon: 0.05
+seed: 9086
+learnable_prompts:
+  n_context: 6 
+  context_init: 'Can you recognize the action of' 
+# hodeg:
+#   min_cluster_size: 5     # 核心参数，控制簇密度
+#   min_samples: 5           # 邻域样本数
+#   epsilon: 0.5             # 簇合并阈值 
+#   metric: 'euclidean'      # 可选cosine/manhattan
+#   use_dim_reduce: True     # 启用自动降维
+#   handle_noise: True       # 噪声点重分配
+spectral:
+  affinity: 'nearest_neighbors'  # 相似度计算方法 [rbf, nearest_neighbors]
+  gamma: 0.5                    # RBF核参数
+  n_neighbors: 3                # 邻居数量
+  auto_k: True                   # 是否自动检测K值

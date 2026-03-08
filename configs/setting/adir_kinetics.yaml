@@ -1,0 +1,9 @@
+# @package _global_
+data:
+  dataset: adir_kinetics
+  source_train_file: "txt/Daily-DA/arid_msda_train.txt"
+  target_train_file: "txt/Daily-DA/kinetics_daily_msda_train.txt"
+  test_file: "txt/Daily-DA/kinetics_daily_msda_test.txt"
+  source_dataset: "adir"
+  target_dataset: "kinetics"
+  root: "dataset"

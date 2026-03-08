@@ -1,0 +1,9 @@
+# @package _global_
+data:
+  dataset: adir_hmdb
+  source_train_file: "txt/Daily-DA/arid_msda_train.txt"
+  target_train_file: "txt/hmdb-ucf/hmdb_test_source.txt"
+  test_file: "txt/hmdb-ucf/hmdb_test_target.txt"
+  source_dataset: "adir"
+  target_dataset: "hmdb"
+  root: "dataset"
